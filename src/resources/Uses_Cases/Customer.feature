@@ -1,5 +1,6 @@
 Feature: Customer
 
+
   Scenario Outline: tore dietary preferences and allergies
     Given a customer wants to input their dietary preferences
     And the preference details:
@@ -17,7 +18,7 @@ Feature: Customer
 
   Scenario Outline: Track past orders and meal plans
     Given a customer wants to view their past orders
-    And the order history details:
+    And  order history details:
       | Customer Name | Last Ordered Meal      |
       | <Customer>    | <LastMeal>             |
     When they access their order history
@@ -52,7 +53,7 @@ Feature: Customer
 
   Scenario Outline: Suggest ingredient substitutions
     Given a customer selects an unavailable ingredient
-    And the substitution details:
+    And substitution details:
       | Customer Name | Original Ingredient | Suggested Substitute |
       | <Customer>    | <Original>          | <Substitute>         |
     When they receive the suggested substitution

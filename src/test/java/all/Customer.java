@@ -1,4 +1,4 @@
-package CustomerPackage;
+package all;
 
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -8,6 +8,18 @@ import org.junit.Assert;
 import java.util.Map;
 
 public class Customer {
+
+
+    public MyApplication obj;
+
+
+    public Customer(MyApplication iobj) {
+        super();
+        this.obj = iobj;
+
+
+    }
+
 
     //  Variables
     private String customerName;
@@ -32,12 +44,17 @@ public class Customer {
         this.customerName = data.get("Customer Name");
         this.dietaryPreference = data.get("Dietary Preference");
         this.allergyInfo = data.get("Allergy");
-        System.out.printf("Loaded preferences for %s: Preference = %s, Allergy = %s%n",
-                customerName, dietaryPreference, allergyInfo);
+
+        obj.addCustomerProfile(customerName, dietaryPreference, allergyInfo);
     }
 
     @When("they save their profile")
     public void they_save_their_profile() {
+
+        CustomerProfile customer = new CustomerProfile(customerName, dietaryPreference, allergyInfo);
+        obj.addCustomer(customer);
+        System.out.println("Customer saves their dietary profile.");
+
         System.out.println("Customer saves their dietary profile.");
     }
 
@@ -63,13 +80,31 @@ public class Customer {
         System.out.println("Customer wants to view past orders.");
     }
 
-    @Given("the order history details:")
-    public void the_order_history_details(DataTable dataTable) {
+    //@Given(" order history details:")
+    //public void order_History_Details(DataTable dataTable) {
+    //  Map<String, String> data = dataTable.asMaps().get(0);
+    //  this.customerName = data.get("Customer Name");
+    // this.lastOrderedMeal = data.get("Last Ordered Meal");
+    // System.out.printf("Loaded past order for %s: %s%n", customerName, lastOrderedMeal);
+    // }
+    @Given("order history details:")
+    public void orderHistoryDetails(io.cucumber.datatable.DataTable dataTable) {
+        // Write code here that turns the phrase above into concrete actions
+        // For automatic transformation, change DataTable to one of
+        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
+        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
+        // Double, Byte, Short, Long, BigInteger or BigDecimal.
+        //
+        // For other transformations you can register a DataTableType.
+
         Map<String, String> data = dataTable.asMaps().get(0);
         this.customerName = data.get("Customer Name");
         this.lastOrderedMeal = data.get("Last Ordered Meal");
         System.out.printf("Loaded past order for %s: %s%n", customerName, lastOrderedMeal);
+
+
     }
+
 
     @When("they access their order history")
     public void they_access_their_order_history() {
@@ -123,8 +158,8 @@ public class Customer {
         System.out.println("Customer selects an unavailable ingredient.");
     }
 
-    @Given("the substitution details:")
-    public void the_substitution_details(DataTable dataTable) {
+    @Given("substitution details:")
+    public void substitution_details(DataTable dataTable) {
         Map<String, String> data = dataTable.asMaps().get(0);
         this.customerName = data.get("Customer Name");
         this.unavailableIngredient = data.get("Original Ingredient");

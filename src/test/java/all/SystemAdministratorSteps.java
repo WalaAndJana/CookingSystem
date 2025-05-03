@@ -1,4 +1,4 @@
-package SystemPackage;
+package all;
 
 import io.cucumber.java.en.*;
 import java.util.*;

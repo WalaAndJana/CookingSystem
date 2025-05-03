@@ -1,4 +1,4 @@
-package ChefPackage;
+package all;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
@@ -78,7 +78,7 @@ public class ChefStepDefinitions {
     }
 
     @Given("the substitution details:")
-    public void setSubstitutionDetails(io.cucumber.datatable.DataTable dataTable) {
+    public void setSubstitutionDetails22(io.cucumber.datatable.DataTable dataTable) {
         var data = dataTable.asMaps().get(0);
         this.originalIngredient = data.get("Original Ingredient");
         this.substitutedIngredient = data.get("Substituted Ingredient");
@@ -120,7 +120,7 @@ public class ChefStepDefinitions {
     }
 
     @Given("the order history details:")
-    public void setOrderHistoryDetails(io.cucumber.datatable.DataTable dataTable) {
+    public void setOrderHistoryDetails22(io.cucumber.datatable.DataTable dataTable) {
         var data = dataTable.asMaps().get(0);
         this.customerName = data.get("Customer Name");
         this.lastOrderedMeal = data.get("Last Ordered Meal");

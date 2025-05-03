@@ -1,4 +1,4 @@
-package CustomerPackage;
+package all;
 
 
 
