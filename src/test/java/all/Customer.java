@@ -7,6 +7,8 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
+
 public class Customer {
 
 
@@ -32,6 +34,14 @@ public class Customer {
     private String substitutionApproval;
 
     //  Store dietary preferences
+    @Given("the customer {string} is logged in")
+    public void the_customer_is_logged_in(String string) {
+
+
+        obj.loginByNameOnly(string);  // Log in by name
+        assertTrue("User is not a customer!", obj.isCustomer()); // Confirm role
+
+    }
 
     @Given("a customer wants to input their dietary preferences")
     public void a_customer_wants_to_input_their_dietary_preferences() {
@@ -67,9 +77,8 @@ public class Customer {
 
     @Then("ensure meals do not contain restricted ingredients")
     public void ensure_meals_do_not_contain_restricted_ingredients() {
-        // No restricted ingredients defined in feature, so we assume basic validation
-        Assert.assertFalse("Dietary preference should not include Allergy",
-                dietaryPreference.toLowerCase().contains(allergyInfo.toLowerCase()));
+        CustomerProfile saved = obj.getProfileByName(customerName);
+        Assert.assertTrue("Meal contains restricted ingredients!", saved.isMealValid());
         System.out.println("Meals validated to not contain allergy-related ingredients.");
     }
 
@@ -80,13 +89,7 @@ public class Customer {
         System.out.println("Customer wants to view past orders.");
     }
 
-    //@Given(" order history details:")
-    //public void order_History_Details(DataTable dataTable) {
-    //  Map<String, String> data = dataTable.asMaps().get(0);
-    //  this.customerName = data.get("Customer Name");
-    // this.lastOrderedMeal = data.get("Last Ordered Meal");
-    // System.out.printf("Loaded past order for %s: %s%n", customerName, lastOrderedMeal);
-    // }
+
     @Given("order history details:")
     public void orderHistoryDetails(io.cucumber.datatable.DataTable dataTable) {
         // Write code here that turns the phrase above into concrete actions
@@ -146,7 +149,7 @@ public class Customer {
 
     @Then("ensure it meets dietary restrictions")
     public void ensure_it_meets_dietary_restrictions() {
-        Assert.assertTrue("Selected ingredients must not conflict with dietary preference",
+        assertTrue("Selected ingredients must not conflict with dietary preference",
                 selectedIngredients != null && !selectedIngredients.isEmpty());
         System.out.println("Custom order meets dietary restrictions.");
     }
@@ -177,7 +180,7 @@ public class Customer {
 
     @Then("they should approve or reject the change")
     public void they_should_approve_or_reject_the_change() {
-        Assert.assertTrue("Customer must approve or reject the suggestion",
+        assertTrue("Customer must approve or reject the suggestion",
                 substitutionApproval.equals("Approved") || substitutionApproval.equals("Rejected"));
         System.out.printf("Customer decision on substitution: %s%n", substitutionApproval);
     }

@@ -11,6 +11,7 @@ public class MyApplication {
     private final List<Person> users;
      private String message;
     private boolean validation;
+    private boolean Customerlogged;
     private Person loggedInUser;
     private boolean isLoggedIn;
     public MyApplication() {
@@ -19,7 +20,7 @@ public class MyApplication {
         users.add(new Person("wala", "wala123", "customer"));
         users.add(new Person("chef1", "chefpass", "chef"));
         users.add(new Person("user88", "abc123", "kitchenManager"));
-//        isLoggedIn=false;
+    isLoggedIn=false;
 
     }
 
@@ -82,8 +83,22 @@ public class MyApplication {
 
 ////////////////////////////////////////////////////////////////////////
 
+    public boolean isCustomer() {
 
+        return loggedInUser != null && "customer".equalsIgnoreCase(loggedInUser.getRole());
+    }
 
+    public void loginByNameOnly(String name) {
+        for (Person user : users) {
+            if (user.getUserName().equalsIgnoreCase(name)) {
+                loggedInUser = user;
+                validation = true;
+                return;
+            }
+        }
+        loggedInUser = null;
+        validation = false;
+    }
 
 
 
@@ -102,12 +117,25 @@ public class MyApplication {
     public List<CustomerProfile> getCustomerProfiles() {
         return customerProfiles;
     }
-    public void addCustomer(CustomerProfile c)
-    {
-
-
-
+    public void addCustomer(CustomerProfile c) {
+        if (c != null && c.isValid()) {
+            customerProfiles.add(c);
+            System.out.println("✅ Customer added: " + c.getName());
+        } else {
+            System.out.println("❌ Invalid customer object.");
+        }
     }
+
+
+    public CustomerProfile getProfileByName(String name) {
+        for (CustomerProfile profile : customerProfiles) {
+            if (profile.getName().equalsIgnoreCase(name)) {
+                return profile;
+            }
+        }
+        return null;
+    }
+
 
 
 }

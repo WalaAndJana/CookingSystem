@@ -2,7 +2,8 @@ Feature: Customer
 
 
   Scenario Outline: tore dietary preferences and allergies
-    Given a customer wants to input their dietary preferences
+    Given the customer "<Customer>" is logged in
+    And a customer wants to input their dietary preferences
     And the preference details:
       | Customer Name | Dietary Preference | Allergy  |
       | <Customer>   | <Preference>       | <Allergy> |
@@ -17,7 +18,8 @@ Feature: Customer
 
 
   Scenario Outline: Track past orders and meal plans
-    Given a customer wants to view their past orders
+    Given the customer "<Customer>" is logged in
+    And a customer wants to view their past orders
     And  order history details:
       | Customer Name | Last Ordered Meal      |
       | <Customer>    | <LastMeal>             |
@@ -31,12 +33,9 @@ Feature: Customer
 
 
 
-
-
-
-
   Scenario Outline: Create custom meal requests
-    Given a customer wants to customize their meal
+    Given the customer "<Customer>" is logged in
+    And a customer wants to customize their meal
     And the customization details:
       | Customer Name | Selected Ingredients    |
       | <Customer>    | <Ingredients>           |
@@ -52,7 +51,8 @@ Feature: Customer
 
 
   Scenario Outline: Suggest ingredient substitutions
-    Given a customer selects an unavailable ingredient
+    Given the customer "<Customer>" is logged in
+    And a customer selects an unavailable ingredient
     And substitution details:
       | Customer Name | Original Ingredient | Suggested Substitute |
       | <Customer>    | <Original>          | <Substitute>         |
