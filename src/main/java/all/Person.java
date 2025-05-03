@@ -3,29 +3,26 @@ package all;
 public class Person {
 
 
-        private String name;
-        private String dietaryPreference;
-        private String allergy;
+        private String userName;
+        private String pass;
+        private String role;
 
-        public Person(String name, String dietaryPreference, String allergy) {
-            this.name = name;
-            this.dietaryPreference = dietaryPreference;
-            this.allergy = allergy;
+        public Person(String userName, String pass, String role) {
+            this.userName = userName;
+            this.pass = pass;
+            this.role = role;
         }
 
-        public String getName() {
-            return name;
+        public String getUserName() {
+            return userName;
         }
 
-        public String getDietaryPreference() {
-            return dietaryPreference;
+        public String getPass() {
+            return pass;
         }
 
-        public String getAllergy() {
-            return allergy;
+        public String getRole() {
+            return role;
         }
 
-        public boolean isMealValid() {
-            return !dietaryPreference.toLowerCase().contains(allergy.toLowerCase());
-        }
     }

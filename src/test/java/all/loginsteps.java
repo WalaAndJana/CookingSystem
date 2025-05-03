@@ -4,73 +4,104 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static org.junit.Assert.*;
+
 public class loginsteps {
+    public String Role;
+    public String name;
+    public String pass;
 
+    MyApplication obj;
+    public loginsteps(MyApplication obj2) {
 
-    public loginsteps() {
+        this.obj = obj2;
 
     }
 
 
     @Given("the system is ready for login")
     public void the_system_is_ready_for_login() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        System.out.println("WELCOME TO THE APP");
+        obj.iAmNotInSystem(obj);
+
+
     }
     @When("the user enters username {string} and password {string}")
     public void the_user_enters_username_and_password(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.name=string;
+        this.pass=string2;
+
+              obj.setUsernameAndPassAndPassFromSystem(name,pass);
+
     }
     @Then("login should succeed for {string}")
     public void login_should_succeed_for(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        assertTrue("Login should succeed", obj.getValidation());
+
     }
     @Then("the user should be redirected to the {string} dashboard")
     public void the_user_should_be_redirected_to_the_dashboard(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+
+        this.Role=string;
+        assertEquals(Role, obj.getLoggedInUserRole());
+
     }
 
 
 
     @When("the user enters username {string} and invalid password {string}")
     public void the_user_enters_username_and_invalid_password(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.name=string;
+        this.pass=string2;
+
+        obj.setUsernameAndPassAndPassFromSystem(name,pass);
+
+
     }
+
     @Then("login should fail with message {string}")
-    public void login_should_fail_with_message(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void login_should_fail_with_message(String expectedMessage) {
+
+        assertFalse("Login should fail", obj.getValidation());
+        assertEquals(expectedMessage, obj.getMessage());
     }
 
     @When("the user enters unkown username {string} and password {string}")
     public void the_user_enters_unkown_username_and_password(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.name=string;
+        this.pass=string2;
+
+        obj.setUsernameAndPassAndPassFromSystem(name,pass);
+
     }
 
 
     @When("the user enters empty username {string} and password {string}")
     public void the_user_enters_empty_username_and_password(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.name=string;
+        this.pass=string2;
+
+        obj.setUsernameAndPassAndPassFromSystem(name,pass);
     }
 
 
 
     @When("the user enters username {string} and empty password {string}")
     public void the_user_enters_username_and_empty_password(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.name=string;
+        this.pass=string2;
+
+        obj.setUsernameAndPassAndPassFromSystem(name,pass);
     }
 
     @When("the user enters empty username {string} and empty password {string}")
     public void the_user_enters_empty_username_and_empty_password(String string, String string2) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        this.name=string;
+        this.pass=string2;
+
+        obj.setUsernameAndPassAndPassFromSystem(name,pass);
     }
 
 

@@ -7,6 +7,86 @@ import java.util.Map;
 
 public class MyApplication {
 
+///////////////log in/////////////////////////////
+    private final List<Person> users;
+     private String message;
+    private boolean validation;
+    private Person loggedInUser;
+    private boolean isLoggedIn;
+    public MyApplication() {
+        users = new ArrayList<>();
+        // mock users
+        users.add(new Person("wala", "wala123", "customer"));
+        users.add(new Person("chef1", "chefpass", "chef"));
+        users.add(new Person("user88", "abc123", "kitchenManager"));
+//        isLoggedIn=false;
+
+    }
+
+    public void setUsernameAndPassAndPassFromSystem(String name, String pass) {
+        validation = false;
+
+        message = "";
+
+        if (name.isEmpty() && pass.isEmpty()) {
+            message = "Username and password cannot be empty";
+            return;
+        }
+
+        if (name.isEmpty()) {
+            message = "Username cannot be empty";
+            return;
+        }
+
+        if (pass.isEmpty()) {
+            message = "Password cannot be empty";
+            return;
+        }
+
+        for (Person user : users) {
+            if (user.getUserName().equals(name)) {
+                if (user.getPass().equals(pass)) {
+                    validation = true;
+                    loggedInUser = user;
+                    return;
+                } else {
+                    message = "Incorrect password";
+                    return;
+                }
+            }
+        }
+
+
+        message = "User not found";
+    }
+
+    public String getLoggedInUserRole() {
+        return (loggedInUser != null) ? loggedInUser.getRole() : null;
+    }
+
+
+    public boolean getValidation() {
+        return validation;
+    }
+
+    public void iAmNotInSystem(MyApplication obj) {
+        validation = false;
+        loggedInUser = null;
+    }
+
+
+
+    public String getMessage() {
+        return message;
+    }
+
+////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
     private List<CustomerProfile> customerProfiles = new ArrayList<>();
 
     public void addCustomerProfile(String name, String preference, String allergy) {
