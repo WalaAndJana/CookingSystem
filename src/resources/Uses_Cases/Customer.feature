@@ -82,7 +82,7 @@ Feature: Customer
       | Bob      | Sugar       | Stevia      |
 
 
-Feature: Customer Notifications
+
 
   Scenario: Send notification for upcoming meal
     Given a customer has an upcoming meal delivery

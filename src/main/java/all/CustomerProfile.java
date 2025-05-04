@@ -1,6 +1,6 @@
 package all;
 
-public class CustomerProfile {
+public class CustomerProfile{
 
 
     private String name;

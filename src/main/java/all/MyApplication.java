@@ -224,4 +224,19 @@ private Map<String, List<String>> orderHistory = new HashMap<>();
 
 
     }
+
+
+    private Map<String, List<String>> allOrders = new HashMap<>();
+
+    public void addOrder(String customerName, String meal) {
+        allOrders.putIfAbsent(customerName, new ArrayList<>());
+        allOrders.get(customerName).add(meal);
+    }
+
+
+
+
+
+
+
 }
