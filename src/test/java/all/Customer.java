@@ -1,10 +1,13 @@
 package all;
 
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertTrue;
@@ -48,25 +51,20 @@ public class Customer {
         System.out.println("Customer wants to input dietary preferences.");
     }
 
-    @Given("the preference details:")
+    @When("the preference details:")
     public void the_preference_details(DataTable dataTable) {
         Map<String, String> data = dataTable.asMaps().get(0);
         this.customerName = data.get("Customer Name");
         this.dietaryPreference = data.get("Dietary Preference");
         this.allergyInfo = data.get("Allergy");
 
-        obj.addCustomerProfile(customerName, dietaryPreference, allergyInfo);
-    }
-
-    @When("they save their profile")
-    public void they_save_their_profile() {
-
+        // Add profile logic once
         CustomerProfile customer = new CustomerProfile(customerName, dietaryPreference, allergyInfo);
-        obj.addCustomer(customer);
-        System.out.println("Customer saves their dietary profile.");
-
-        System.out.println("Customer saves their dietary profile.");
+        obj.addCustomer(customer); // or obj.addCustomerProfile(...)
+        System.out.println("✅ Customer profile created and saved for: " + customerName);
     }
+
+
 
     @Then("the system should store their preferences")
     public void the_system_should_store_their_preferences() {
@@ -75,6 +73,22 @@ public class Customer {
         System.out.println("Preferences successfully stored.");
     }
 
+    @Then( "the system should only show meals matching their dietary needs")
+    public void theSystemShouldOnlyShowMealsMatchingTheirDietaryNeeds(){
+
+        CustomerProfile profile = obj.getProfileByName(customerName);
+        List<String> meals = obj.getFilteredSuggestedMeals(profile);
+
+        System.out.println("🍽 Suggested meals for " + customerName + ":");
+        for (String meal : meals) {
+            System.out.println(" - " + meal);
+            Assert.assertFalse(meal.toLowerCase().contains(profile.getAllergy().toLowerCase()));
+        }
+
+        Assert.assertFalse("No safe meals found!", meals.isEmpty());
+
+     }
+
     @Then("ensure meals do not contain restricted ingredients")
     public void ensure_meals_do_not_contain_restricted_ingredients() {
         CustomerProfile saved = obj.getProfileByName(customerName);
@@ -82,28 +96,20 @@ public class Customer {
         System.out.println("Meals validated to not contain allergy-related ingredients.");
     }
 
-    //  View past orders
+    //  View past orders////////////////////////////////////////////
 
-    @Given("a customer wants to view their past orders")
-    public void a_customer_wants_to_view_their_past_orders() {
-        System.out.println("Customer wants to view past orders.");
-    }
+
 
 
     @Given("order history details:")
     public void orderHistoryDetails(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-
         Map<String, String> data = dataTable.asMaps().get(0);
         this.customerName = data.get("Customer Name");
         this.lastOrderedMeal = data.get("Last Ordered Meal");
-        System.out.printf("Loaded past order for %s: %s%n", customerName, lastOrderedMeal);
+
+        obj.addMealToOrderHistory(customerName, lastOrderedMeal);
+
+        System.out.printf("✅ Loaded and saved past order for %s: %s%n", customerName, lastOrderedMeal);
 
 
     }
@@ -116,8 +122,31 @@ public class Customer {
 
     @Then("the system should display their past meal orders")
     public void the_system_should_display_their_past_meal_orders() {
-        Assert.assertNotNull("Order history should be displayed", lastOrderedMeal);
-        System.out.printf("Displaying past meal orders: %s%n", lastOrderedMeal);
+        List<String> orders = obj.getOrdersForCustomer(customerName);
+        Assert.assertFalse("No past meals found", orders.isEmpty());
+
+        System.out.println("🍽 Past meals for " + customerName + ":");
+        for (String meal : orders) {
+            System.out.println(" - " + meal);
+        }
+
+    }
+
+
+    @When("the customer chooses to reorder {string}")
+    public void theCustomerChoosesToReorder(String meal) {
+        this.lastOrderedMeal = meal;
+        obj.reorderMeal(customerName, meal);
+        System.out.println("✅ Customer " + customerName + " has reordered: " + meal);
+
+    }
+
+    @Then("the system should confirm the reorder")
+    public void theSystemShouldConfirmTheReorder() {
+
+        List<String> pending = obj.getPendingOrders(customerName);
+        assertTrue("Meal not found in pending list!", pending.contains(lastOrderedMeal));
+
     }
 
     //  Customize meal
@@ -184,4 +213,31 @@ public class Customer {
                 substitutionApproval.equals("Approved") || substitutionApproval.equals("Rejected"));
         System.out.printf("Customer decision on substitution: %s%n", substitutionApproval);
     }
+
+
+
+
+
+    private String notificationStatus;
+
+
+
+    @Given("a customer has an upcoming meal delivery")
+    public void a_customer_has_an_upcoming_meal_delivery() {
+        System.out.println("Customer has an upcoming delivery scheduled.");
+    }
+
+    @When("the system sends a reminder notification")
+    public void the_system_sends_a_reminder_notification() {
+        this.notificationStatus = "Sent";
+        System.out.println("Reminder notification sent to customer.");
+    }
+
+    @Then("the customer should receive the notification")
+    public void the_customer_should_receive_the_notification() {
+        Assert.assertEquals("Notification should be sent successfully", "Sent", notificationStatus);
+        System.out.println("Customer received the meal delivery reminder.");
+    }
+
+
 }

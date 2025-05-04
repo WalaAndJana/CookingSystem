@@ -4,12 +4,13 @@ Feature: Customer
   Scenario Outline: tore dietary preferences and allergies
     Given the customer "<Customer>" is logged in
     And a customer wants to input their dietary preferences
-    And the preference details:
+    When the preference details:
       | Customer Name | Dietary Preference | Allergy  |
       | <Customer>   | <Preference>       | <Allergy> |
-    When they save their profile
     Then the system should store their preferences
     And ensure meals do not contain restricted ingredients
+    And the system should only show meals matching their dietary needs
+
 
     Examples:
       | Customer | Preference  | Allergy  |
@@ -19,7 +20,6 @@ Feature: Customer
 
   Scenario Outline: Track past orders and meal plans
     Given the customer "<Customer>" is logged in
-    And a customer wants to view their past orders
     And  order history details:
       | Customer Name | Last Ordered Meal      |
       | <Customer>    | <LastMeal>             |
@@ -29,8 +29,25 @@ Feature: Customer
     Examples:
       | Customer | LastMeal               |
       | Sarah    | Grilled Chicken Salad  |
+      | Sarah    | Fruit Bowl             |
+      | Sarah    | Lentil Soup            |
       | Tom      | Gluten-Free Pasta      |
+      | Tom      | Protein Shake          |
 
+
+
+  Scenario Outline: Customer reorders a past meal
+    Given the customer "<Customer>" is logged in
+    And order history details:
+      | Customer Name | Last Ordered Meal |
+      | <Customer>    | <Meal>            |
+    When the customer chooses to reorder "<Meal>"
+    Then the system should confirm the reorder
+
+    Examples:
+      | Customer | Meal                  |
+      | Sarah    | Fruit Bowl            |
+      | Sarah    | Lentil Soup           |
 
 
   Scenario Outline: Create custom meal requests
@@ -63,3 +80,11 @@ Feature: Customer
       | Customer | Original    | Substitute  |
       | Anna     | Almond Milk | Oat Milk    |
       | Bob      | Sugar       | Stevia      |
+
+
+Feature: Customer Notifications
+
+  Scenario: Send notification for upcoming meal
+    Given a customer has an upcoming meal delivery
+    When the system sends a reminder notification
+    Then the customer should receive the notification

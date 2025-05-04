@@ -1,26 +1,24 @@
 package all;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MyApplication {
 
-///////////////log in/////////////////////////////
+    ///////////////log in/////////////////////////////
     private final List<Person> users;
-     private String message;
+    private String message;
     private boolean validation;
     private boolean Customerlogged;
     private Person loggedInUser;
     private boolean isLoggedIn;
+
     public MyApplication() {
         users = new ArrayList<>();
         // mock users
         users.add(new Person("wala", "wala123", "customer"));
         users.add(new Person("chef1", "chefpass", "chef"));
         users.add(new Person("user88", "abc123", "kitchenManager"));
-    isLoggedIn=false;
+        isLoggedIn = false;
 
     }
 
@@ -76,7 +74,6 @@ public class MyApplication {
     }
 
 
-
     public String getMessage() {
         return message;
     }
@@ -101,10 +98,9 @@ public class MyApplication {
     }
 
 
-
     private List<CustomerProfile> customerProfiles = new ArrayList<>();
 
-    public void addCustomerProfile(String name, String preference, String allergy) {
+  /*  public void addCustomerProfile(String name, String preference, String allergy) {
         CustomerProfile customer = new CustomerProfile(name, preference, allergy); // null = لم يُطلب بعد
         if (customer.isValid()) {
             customerProfiles.add(customer);
@@ -112,11 +108,12 @@ public class MyApplication {
         } else {
             System.out.println("❌ Invalid customer data.");
         }
-    }
+    }*/
 
     public List<CustomerProfile> getCustomerProfiles() {
         return customerProfiles;
     }
+
     public void addCustomer(CustomerProfile c) {
         if (c != null && c.isValid()) {
             customerProfiles.add(c);
@@ -138,4 +135,93 @@ public class MyApplication {
 
 
 
+
+
+
+
+
+
+    private List<String> suggestedMeals = Arrays.asList(
+            "Mushroom Risotto",
+            "Almond Milk Smoothie",
+            "Lentil Stew",
+            "Vegan Tofu Stir-Fry",
+            "Grilled Chicken"
+    );
+
+    public List<String> getFilteredSuggestedMeals(CustomerProfile profile) {
+
+        List<String> allowedMeals = new ArrayList<>();
+
+        for (String meal : suggestedMeals) {
+            // If meal doesn't mention allergy AND matches preference
+
+            if (!meal.toLowerCase().contains(profile.getAllergy().toLowerCase()) &&
+                    meal.toLowerCase().contains(profile.getDietaryPreference().toLowerCase())) {
+                allowedMeals.add(meal);
+            }
+        }
+
+        return allowedMeals;
+    }
+
+
+
+    ////////////////////orders////////////////////////////
+
+
+    private Map<String, List<String>> pendingOrders = new HashMap<>();
+
+
+
+    public void addToPendingOrders(String customerName, String meal) {
+        pendingOrders.putIfAbsent(customerName, new ArrayList<>());
+        pendingOrders.get(customerName).add(meal);
+
+        System.out.println("⚠️ Order added to pending list. Please confirm it before submission.");
+    }
+
+
+    public List<String> getPendingOrders(String customerName) {
+        return pendingOrders.getOrDefault(customerName, new ArrayList<>());
+    }
+
+    public void confirmOrders(String customerName) {
+        List<String> confirmed = pendingOrders.get(customerName);
+        if (confirmed != null && !confirmed.isEmpty()) {
+            for (String meal : confirmed) {
+                addMealToOrderHistory(customerName, meal); // Move to history
+                //////// You can also notify or assign it to chef logic here
+            }
+            pendingOrders.put(customerName, new ArrayList<>()); // Clear pending
+            System.out.println("✅ Orders confirmed and sent to the chef.");
+        } else {
+            System.out.println("⚠️ No pending orders to confirm.");
+        }
+    }
+
+///////////////////////////////////history////////////////////////////
+private Map<String, List<String>> orderHistory = new HashMap<>();
+
+
+    public void addMealToOrderHistory(String customerName, String meal) {
+        orderHistory.putIfAbsent(customerName, new ArrayList<>());
+        orderHistory.get(customerName).add(meal);
+    }
+
+    public void reorderMeal(String customerName, String meal)
+    {
+        pendingOrders.putIfAbsent(customerName, new ArrayList<>());
+        pendingOrders.get(customerName).add(meal);
+
+        System.out.println("⚠️ '" + meal + "' has been added to your pending orders.");
+        System.out.println("Please confirm your order to send it to the chef.");
+
+    }
+
+    public List<String> getOrdersForCustomer(String customerName) {
+        return orderHistory.getOrDefault(customerName, new ArrayList<>());
+
+
+    }
 }
