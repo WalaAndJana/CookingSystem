@@ -5,9 +5,11 @@ import all.Manager;
 import all.MyApplication;
 import all.chef;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-//
+
 //        // Assign tasks to chefs
 //        MyApplication.assignTaskToChef("Grill Chicken Breast", "grilling");
 //        MyApplication.assignTaskToChef("Make Vegan Salad", "vegan");
@@ -41,6 +43,36 @@ public class Main {
 //        MyApplication.viewAssignedTasksForChef("chef1");
 //        MyApplication.viewAssignedTasksForChef("chef2");
 //        MyApplication.viewAssignedTasksForChef("chef3");
+//
+
+
+//        public void chefSelectCustomerFromList(Scanner scanner) {
+//            List<CustomerProfile> profiles = getCustomerProfiles();
+//
+//            if (profiles.isEmpty()) {
+//                System.out.println("❌ No customer profiles available.");
+//                return;
+//            }
+//
+//            System.out.println("👥 Available Customers:");
+//            for (int i = 0; i < profiles.size(); i++) {
+//                System.out.printf("%d. %s%n", i + 1, profiles.get(i).getName());
+//            }
+//
+//            System.out.print("Select a customer number: ");
+//            int choice = scanner.nextInt();
+//            scanner.nextLine(); // clear newline
+//
+//            if (choice < 1 || choice > profiles.size()) {
+//                System.out.println("❌ Invalid choice.");
+//                return;
+//            }
+//
+//            CustomerProfile selected = profiles.get(choice - 1);
+//            System.out.println("👤 Profile for " + selected.getName() + ":");
+//            System.out.println("   • Dietary Preference: " + selected.getDietaryPreference());
+//            System.out.println("   • Allergy: " + selected.getAllergy());
+//        }
 //
 
 
