@@ -3,7 +3,7 @@ package all;
 public class Person {
 
 
-        private String userName;
+        protected String userName;
         private String pass;
         private String role;
 

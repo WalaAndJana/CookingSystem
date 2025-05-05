@@ -6,6 +6,8 @@ public class MyApplication {
 
     ///////////////log in/////////////////////////////
     private final List<Person> users;
+    public static List<chef> chefs = new ArrayList<>(); // array of ches
+
     private String message;
     private boolean validation;
     private boolean Customerlogged;
@@ -16,8 +18,12 @@ public class MyApplication {
         users = new ArrayList<>();
         // mock users
         users.add(new Person("wala", "wala123", "customer"));
-        users.add(new Person("chef1", "chefpass", "chef"));
+      //  users.add(new Person("chef1", "chefpass", "chef"));
         users.add(new Person("user88", "abc123", "kitchenManager"));
+        chefs.add(new chef("chef1", "grilling","chef1pass", "chef"));
+        chefs.add(new chef("chef2", "vegan","chef2pass", "chef"));
+        chefs.add(new chef("chef3", "baking","chef3pass", "chef"));
+
         isLoggedIn = false;
 
     }
@@ -63,7 +69,6 @@ public class MyApplication {
         return (loggedInUser != null) ? loggedInUser.getRole() : null;
     }
 
-
     public boolean getValidation() {
         return validation;
     }
@@ -72,7 +77,6 @@ public class MyApplication {
         validation = false;
         loggedInUser = null;
     }
-
 
     public String getMessage() {
         return message;
@@ -232,6 +236,77 @@ private Map<String, List<String>> orderHistory = new HashMap<>();
         allOrders.putIfAbsent(customerName, new ArrayList<>());
         allOrders.get(customerName).add(meal);
     }
+
+
+
+/////////////////// kitchen manager ////////////////////
+
+    public static void assignTaskToChef(String task, String requiredExpertise) {
+    chef bestChef = null;
+
+    for (chef chef : chefs) {
+        if (chef.getExpertise().equalsIgnoreCase(requiredExpertise)) {
+            if (bestChef == null || chef.getTaskCount() < bestChef.getTaskCount()) {
+                bestChef = chef;
+            }
+        }
+    }
+
+    if (bestChef != null) {
+        bestChef.assignTask(task);
+    } else {
+        System.out.println("❌ No chef available with expertise: " + requiredExpertise);
+    }
+}
+
+
+    public static void viewAssignedTasksForChef(String chefName) {
+        for (chef chef : chefs) {
+            if (chef.getUserName().equalsIgnoreCase(chefName)) {
+                System.out.println("📋 Tasks for " + chef.getUserName() + ":");
+                for (String task : chef.getAssignedTasks()) {
+                    System.out.println(" - " + task);
+                }
+                return;
+            }
+        }
+        System.out.println("❌ Chef not found.");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -71,6 +71,7 @@ public class KitchenManagerStepDef {
     @Then("the system shows a confirmation: {string}")
     public void verifyConfirmation(String expectedConfirmation) {
         assertEquals(expectedConfirmation, systemResponse);
+
     }
 
     @Then("future meal recommendations exclude:")
