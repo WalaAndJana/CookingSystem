@@ -1,6 +1,7 @@
 package org.example;
 
 import all.CustomerProfile;
+import all.Manager;
 import all.MyApplication;
 import all.chef;
 
@@ -43,10 +44,18 @@ public class Main {
 //
 
 
+        Manager.addIngredient("Tomato", 20, 5);
+        Manager.addIngredient("Chicken", 10, 3);
 
+        Manager.useIngredient("Tomato", 3);  // ✅ okay
+        Manager.useIngredient("Tomato", 15); // ⚠️ triggers restock alert
+
+        Manager.showInventory();
+
+        Manager.restockIngredient("Tomato", 20);
+        Manager.showInventory();
 
     }
-
 
 
 }

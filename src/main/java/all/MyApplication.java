@@ -7,6 +7,10 @@ public class MyApplication {
     ///////////////log in/////////////////////////////
     private final List<Person> users;
     public static List<chef> chefs = new ArrayList<>(); // array of ches
+    public static List<Manager> managers = new ArrayList<>(); // array of managers
+    public static List<Ingredient> ingredients = new ArrayList<>(); // array of ingredients
+    public static List<Supplier> suppliers = new ArrayList<>(); // array of suppliers
+
 
     private String message;
     private boolean validation;
@@ -25,6 +29,43 @@ public class MyApplication {
         chefs.add(new chef("chef1", "grilling","chef1pass", "chef"));
         chefs.add(new chef("chef2", "vegan","chef2pass", "chef"));
         chefs.add(new chef("chef3", "baking","chef3pass", "chef"));
+
+        managers.add(new Manager("manager1", "manager1pass", "manager"));
+        managers.add(new Manager("manager2", "manager2pass", "manager"));
+        managers.add(new Manager("manager3", "manager3pass", "manager"));
+
+        // 🥦 Mock ingredients
+        ingredients.add(new Ingredient("Tomato", 20, 10));
+        ingredients.add(new Ingredient("Cheese", 5, 8));
+        ingredients.add(new Ingredient("Lettuce", 2, 5));
+        ingredients.add(new Ingredient("Onion", 15, 10));
+        ingredients.add(new Ingredient("Garlic", 7, 5));
+        ingredients.add(new Ingredient("Beef", 3, 6));
+        ingredients.add(new Ingredient("Chicken", 12, 8));
+        ingredients.add(new Ingredient("Flour", 25, 15));
+        ingredients.add(new Ingredient("Sugar", 18, 10));
+        ingredients.add(new Ingredient("Salt", 40, 20));
+
+        // 🚚 Mock suppliers
+        Supplier supplier1 = new Supplier("FreshFoods");
+        supplier1.addIngredientPrice(new Ingredient("Tomato", 0, 0), 2.0);
+        supplier1.addIngredientPrice(new Ingredient("Cheese", 0, 0), 5.5);
+        supplier1.addIngredientPrice(new Ingredient("Garlic", 0, 0), 1.0);
+        supplier1.addIngredientPrice(new Ingredient("Beef", 0, 0), 10.0);
+
+        Supplier supplier2 = new Supplier("GreenHarvest");
+        supplier2.addIngredientPrice(new Ingredient("Lettuce", 0, 0), 1.2);
+        supplier2.addIngredientPrice(new Ingredient("Onion", 0, 0), 1.8);
+        supplier2.addIngredientPrice(new Ingredient("Chicken", 0, 0), 6.5);
+
+        Supplier supplier3 = new Supplier("DailyEssentials");
+        supplier3.addIngredientPrice(new Ingredient("Flour", 0, 0), 0.9);
+        supplier3.addIngredientPrice(new Ingredient("Sugar", 0, 0), 1.1);
+        supplier3.addIngredientPrice(new Ingredient("Salt", 0, 0), 0.5);
+
+        suppliers.add(supplier1);
+        suppliers.add(supplier2);
+        suppliers.add(supplier3);
 
         isLoggedIn = false;
 
@@ -70,7 +111,22 @@ public class MyApplication {
                 if (chef.getPass().equals(pass)) {
                     validation = true;
                     loggedInUser = chef;
-                    message = "User Found";
+                    message = "Chef Found";
+                    return;
+                } else {
+                    message = "Incorrect password";
+                    return;
+                }
+            }
+
+        }
+
+        for (Manager Manager : managers) {
+            if (Manager.getUserName().equals(name)) {
+                if (Manager.getPass().equals(pass)) {
+                    validation = true;
+                    loggedInUser = Manager;
+                    message = "Manager Found";
                     return;
                 } else {
                     message = "Incorrect password";
