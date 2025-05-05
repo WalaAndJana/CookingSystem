@@ -18,8 +18,10 @@ public class MyApplication {
         users = new ArrayList<>();
         // mock users
         users.add(new Person("wala", "wala123", "customer"));
-      //  users.add(new Person("chef1", "chefpass", "chef"));
+        users.add(new Person("chef1", "chefpass", "chef"));
         users.add(new Person("user88", "abc123", "kitchenManager"));
+
+
         chefs.add(new chef("chef1", "grilling","chef1pass", "chef"));
         chefs.add(new chef("chef2", "vegan","chef2pass", "chef"));
         chefs.add(new chef("chef3", "baking","chef3pass", "chef"));
@@ -48,17 +50,34 @@ public class MyApplication {
             return;
         }
 
-        for (Person user : users) {
+/*        for (Person user : users) {
             if (user.getUserName().equals(name)) {
                 if (user.getPass().equals(pass)) {
                     validation = true;
                     loggedInUser = user;
+                    message = "User Found";
                     return;
                 } else {
                     message = "Incorrect password";
                     return;
                 }
             }
+            }
+        */
+
+        for (chef chef : chefs) {
+            if (chef.getUserName().equals(name)) {
+                if (chef.getPass().equals(pass)) {
+                    validation = true;
+                    loggedInUser = chef;
+                    message = "User Found";
+                    return;
+                } else {
+                    message = "Incorrect password";
+                    return;
+                }
+            }
+
         }
 
 
