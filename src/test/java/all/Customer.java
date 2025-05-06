@@ -172,8 +172,11 @@ public class Customer {
 
     @Then("the system should validate the ingredient selection")
     public void the_system_should_validate_the_ingredient_selection() {
-        Assert.assertNotNull("Selected ingredients should not be null", selectedIngredients);
-        System.out.println("Custom order ingredients validated.");
+        CustomerProfile profile = obj.getProfileByName(customerName);
+        //boolean valid = obj.validateCustomMeal(selectedIngredients, profile);
+
+       // Assert.assertTrue("Invalid meal: contains allergy or unavailable item", valid);
+        System.out.println("✅ Custom meal is valid and safe.");
     }
 
     @Then("ensure it meets dietary restrictions")

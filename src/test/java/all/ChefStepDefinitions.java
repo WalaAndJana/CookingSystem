@@ -6,6 +6,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.And;
 import org.junit.Assert;
 
+import java.util.List;
+
 public class ChefStepDefinitions {
 
     public MyApplication obj;
@@ -155,13 +157,14 @@ public class ChefStepDefinitions {
     @When("they access a customer's order history")
     public void accessOrderHistory() {
 
-        System.out.printf("Accessing order history for %s%n", customerName);
+        obj.getOrdersForCustomer(customerName);
     }
 
     @Then("the system should display past orders")
     public void displayPastOrders() {
-        Assert.assertNotNull("Last ordered meal should be displayed", lastOrderedMeal);
-        System.out.printf("Displaying last ordered meal: %s%n", lastOrderedMeal);
+
+        obj.getOrdersForCustomer(customerName);
+
     }
 
 

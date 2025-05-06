@@ -26,9 +26,9 @@ public class MyApplication {
         users.add(new Person("user88", "abc123", "kitchenManager"));
 
 
-        chefs.add(new chef("chef1", "grilling","chef1pass", "chef"));
-        chefs.add(new chef("chef2", "vegan","chef2pass", "chef"));
-        chefs.add(new chef("chef3", "baking","chef3pass", "chef"));
+        chefs.add(new chef("chef1", "grilling", "chef1pass", "chef"));
+        chefs.add(new chef("chef2", "vegan", "chef2pass", "chef"));
+        chefs.add(new chef("chef3", "baking", "chef3pass", "chef"));
 
         managers.add(new Manager("manager1", "manager1pass", "manager"));
         managers.add(new Manager("manager2", "manager2pass", "manager"));
@@ -203,9 +203,6 @@ public class MyApplication {
     }
 
 
-
-
-
     public CustomerProfile getProfileByName(String name) {
         for (CustomerProfile profile : customerProfiles) {
             if (profile.getName().equalsIgnoreCase(name)) {
@@ -214,13 +211,6 @@ public class MyApplication {
         }
         return null;
     }
-
-
-
-
-
-
-
 
 
     private List<String> suggestedMeals = Arrays.asList(
@@ -248,12 +238,10 @@ public class MyApplication {
     }
 
 
-
     ////////////////////orders////////////////////////////
 
 
     private Map<String, List<String>> pendingOrders = new HashMap<>();
-
 
 
     public void addToPendingOrders(String customerName, String meal) {
@@ -282,8 +270,8 @@ public class MyApplication {
         }
     }
 
-///////////////////////////////////history////////////////////////////
-private Map<String, List<String>> orderHistory = new HashMap<>();
+    ///////////////////////////////////history////////////////////////////
+    private Map<String, List<String>> orderHistory = new HashMap<>();
 
 
     public void addMealToOrderHistory(String customerName, String meal) {
@@ -291,8 +279,7 @@ private Map<String, List<String>> orderHistory = new HashMap<>();
         orderHistory.get(customerName).add(meal);
     }
 
-    public void reorderMeal(String customerName, String meal)
-    {
+    public void reorderMeal(String customerName, String meal) {
         pendingOrders.putIfAbsent(customerName, new ArrayList<>());
         pendingOrders.get(customerName).add(meal);
 
@@ -316,26 +303,25 @@ private Map<String, List<String>> orderHistory = new HashMap<>();
     }
 
 
-
 /////////////////// kitchen manager ////////////////////
 
     public static void assignTaskToChef(String task, String requiredExpertise) {
-    chef bestChef = null;
+        chef bestChef = null;
 
-    for (chef chef : chefs) {
-        if (chef.getExpertise().equalsIgnoreCase(requiredExpertise)) {
-            if (bestChef == null || chef.getTaskCount() < bestChef.getTaskCount()) {
-                bestChef = chef;
+        for (chef chef : chefs) {
+            if (chef.getExpertise().equalsIgnoreCase(requiredExpertise)) {
+                if (bestChef == null || chef.getTaskCount() < bestChef.getTaskCount()) {
+                    bestChef = chef;
+                }
             }
         }
-    }
 
-    if (bestChef != null) {
-        bestChef.assignTask(task);
-    } else {
-        System.out.println("❌ No chef available with expertise: " + requiredExpertise);
+        if (bestChef != null) {
+            bestChef.assignTask(task);
+        } else {
+            System.out.println("❌ No chef available with expertise: " + requiredExpertise);
+        }
     }
-}
 
 
     public static void viewAssignedTasksForChef(String chefName) {
@@ -351,42 +337,30 @@ private Map<String, List<String>> orderHistory = new HashMap<>();
         System.out.println("❌ Chef not found.");
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+    private Set<String> unavailableIngredients = Set.of("Peanuts", "Shellfish", "Bacon");
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//    public boolean validateCustomMeal(String selectedIngredients, CustomerProfile profile) {
+//
+//        String[] selected = ingredients.Split(",\\s*");
+//        for (String ing : selected) {
+//            // 1. Check allergy
+//            if (profile.getAllergy().equalsIgnoreCase(ing)) {
+//                System.out.println("❌ Ingredient conflicts with allergy: " + ing);
+//                return false;
+//            }
+//            // 2. Check stock
+//            if (unavailableIngredients.contains(ing)) {
+//           System.out.println("⚠️ Ingredient unavailable: " + ing);
+//                return false;
+//            }
+//        }
+//        return true;
+//
+//
+//    }
 
 
 
