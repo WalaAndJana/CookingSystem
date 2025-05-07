@@ -4,9 +4,11 @@ public class Ingredient {
     private String name;
     private int quantity;
     private int threshold; // when quantity drops below this, suggest restock
-
-    public Ingredient(String name, int quantity, int threshold) {
+   // private String alternative1;
+    private Ingredient alternative;
+    public Ingredient(String name, int quantity, int threshold,Ingredient alternative) {
         this.name = name;
+        this.alternative = alternative;
         this.quantity = quantity;
         this.threshold = threshold;
     }

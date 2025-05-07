@@ -219,8 +219,6 @@ public class Customer {
 
 
 
-
-
     private String notificationStatus;
 
 
