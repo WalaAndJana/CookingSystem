@@ -25,5 +25,6 @@ public class Supplier {
     }
 
     public void addIngredientPrice(Ingredient flour, double v) {
+        setPrice(flour, v);
     }
 }

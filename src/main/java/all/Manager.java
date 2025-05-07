@@ -38,4 +38,5 @@ public class Manager extends Person {
             System.out.println(" - " + ing.getName() + ": " + ing.getQuantity());
         }
     }
+
 }
