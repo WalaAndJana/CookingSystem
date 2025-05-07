@@ -46,6 +46,8 @@ public class MyApplication {
         ingredients.add(new Ingredient("Sugar", 18, 10));
         ingredients.add(new Ingredient("Salt", 40, 20));
 
+
+
         // 🚚 Mock suppliers
         Supplier supplier1 = new Supplier("FreshFoods");
         supplier1.addIngredientPrice(new Ingredient("Tomato", 0, 0), 2.0);
@@ -314,7 +316,7 @@ private Map<String, List<String>> orderHistory = new HashMap<>();
 
 
 
-/////////////////// kitchen manager ////////////////////
+/////////////////// kitchen manager ///////////////////
 
     public static void assignTaskToChef(String task, String requiredExpertise) {
     chef bestChef = null;

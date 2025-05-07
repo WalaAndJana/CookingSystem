@@ -34,7 +34,8 @@ public class ChefStepDefinitions {
 
     @When("they check their task list")
     public void checkTaskList() {
-        System.out.printf("%s checks their task list%n", chefName);
+        System.out.printf(
+                "%s checks their task list%n", chefName);
     }
 
     @Then("the system should display all assigned tasks")
