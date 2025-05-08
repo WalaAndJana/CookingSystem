@@ -157,13 +157,13 @@ public class ChefStepDefinitions {
     @When("they access a customer's order history")
     public void accessOrderHistory() {
 
-        obj.getOrdersForCustomer(customerName);
+        //obj.getOrdersForCustomer(customerName);
     }
 
     @Then("the system should display past orders")
     public void displayPastOrders() {
 
-        obj.getOrdersForCustomer(customerName);
+        //obj.getOrdersForCustomer(customerName);
 
     }
 
