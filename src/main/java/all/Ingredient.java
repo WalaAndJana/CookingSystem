@@ -44,4 +44,11 @@ public class Ingredient {
         this.quantity += amount;
         System.out.println("✅ " + name + " restocked. New quantity: " + quantity);
     }
+
+    public Ingredient getAlternative() {
+        return alternative;
+    }
+
+
+
 }

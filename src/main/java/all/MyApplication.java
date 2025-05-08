@@ -14,6 +14,7 @@ public class MyApplication {
     private List<order> pendingOrders = new ArrayList<>();
     private List<order> orderHistory = new ArrayList<>();
     private List<order> allOrders = new ArrayList<>();
+    private List<meal> meals=new ArrayList<>();
 
 
     private String message;
@@ -34,11 +35,17 @@ public class MyApplication {
 
 
 
+
+
             customers.add(alice);
             customers.add(mark);
             customers.add(emily);
             customers.add(tom);
             customers.add(jake);
+
+
+
+
 
 //        users.add(new Person("wala", "wala123", "customer"));
 //        users.add(new Person("chef1", "chefpass", "chef"));
@@ -63,7 +70,21 @@ public class MyApplication {
         Ingredient chicken = new Ingredient("Chicken", 12, 8, new Ingredient("Soy Chunks", 10, 5, null));
         Ingredient flour = new Ingredient("Flour", 25, 15, new Ingredient("Oat Flour", 10, 5, null));
         Ingredient sugar = new Ingredient("Sugar", 18, 10, new Ingredient("Stevia", 8, 3, null));
-        Ingredient salt = new Ingredient("Salt", 40, 20, null);
+        Ingredient tofu = new Ingredient("Tofu", 10, 5, null);
+        Ingredient salt = new Ingredient("Salt", 20, 10, null);
+
+
+        meal veganBowl = new meal("Vegan Bowl", List.of(tofu, lettuce, tomato));
+        meal beefBurger = new meal("Beef Burger", List.of(beef, onion, lettuce, salt));
+        meal cheesyGarlicBread = new meal("Cheesy Garlic Bread", List.of(flour, cheese, garlic));
+        meal chickenWrap = new meal("Chicken Wrap", List.of(chicken, tomato, lettuce, onion));
+        meal sweetBites = new meal("Sweet Bites", List.of(sugar, flour));
+        meal proteinDelight = new meal("Protein Delight", List.of(beef, chicken, garlic));
+        meal greenSalad = new meal("Green Salad", List.of(lettuce, tomato, onion));
+        meal classicToast = new meal("Classic Toast", List.of(flour, salt));
+        meal dietSmoothie = new meal("Diet Smoothie", List.of(sugar, salt, tomato));
+
+
 
 
         // 🚚 Mock suppliers
@@ -299,36 +320,35 @@ public class MyApplication {
 //    private Map<String, List<String>> orderHistory = new HashMap<>();
 
 
-    public void addMealToOrderHistory(String customerName, String meal) {
-        orderHistory.putIfAbsent(customerName, new ArrayList<>());
-        orderHistory.get(customerName).add(meal);
-    }
-
-    public void reorderMeal(String customerName, String meal) {
-        pendingOrders.putIfAbsent(customerName, new ArrayList<>());
-        pendingOrders.get(customerName).add(meal);
-
-        System.out.println("⚠️ '" + meal + "' has been added to your pending orders.");
-        System.out.println("Please confirm your order to send it to the chef.");
-
-    }
-
-    public List<String> getOrdersForCustomer(String customerName) {
-        return orderHistory.getOrDefault(customerName, new ArrayList<>());
-
-
-    }
-
-
-    private Map<String, List<String>> allOrders = new HashMap<>();
-
-    public void addOrder(String customerName, String meal) {
-
-        allOrders.putIfAbsent(customerName, new ArrayList<>());
-
-        allOrders.get(customerName).add(meal);
-    }
-
+//    public void addMealToOrderHistory(String customerName, String meal) {
+//        orderHistory.putIfAbsent(customerName, new ArrayList<>());
+//        orderHistory.get(customerName).add(meal);
+//    }
+//
+//    public void reorderMeal(String customerName, String meal) {
+//        pendingOrders.putIfAbsent(customerName, new ArrayList<>());
+//        pendingOrders.get(customerName).add(meal);
+//
+//        System.out.println("⚠️ '" + meal + "' has been added to your pending orders.");
+//        System.out.println("Please confirm your order to send it to the chef.");
+//
+//    }
+//
+//    public List<String> getOrdersForCustomer(String customerName) {
+//        return orderHistory.getOrDefault(customerName, new ArrayList<>());
+//
+//
+//    }
+//
+//
+//    private Map<String, List<String>> allOrders = new HashMap<>();
+//
+//    public void addOrder(String customerName, String meal) {
+//
+//        allOrders.putIfAbsent(customerName, new ArrayList<>());
+//
+//        allOrders.get(customerName).add(meal);
+//    }
 
 /////////////////// kitchen manager ////////////////////
 
@@ -388,6 +408,95 @@ public class MyApplication {
 //
 //
 //    }
+
+
+    public double getPriceForIngredient(Ingredient ingredient) {
+        for (Supplier supplier : suppliers) {
+            double price = supplier.getPrice(ingredient);
+            if (price >= 0) {
+                return price;
+            }
+        }
+        System.out.println("⚠️ No supplier found for ingredient: " + ingredient.getName());
+        return 0.0;  // or -1.0 if you want to flag it as an error
+    }
+
+    public double calculateMealPrice(List<Ingredient> ingredients) {
+        double price = 0.0;
+        for (Ingredient ing : ingredients) {
+
+         //   price += ingredientPrices.getOrDefault(ing, 0.0); // assuming ingredientPrices is a Map
+        }
+        return price;
+    }
+
+
+    public List<Ingredient> validateIngredients(List<Ingredient> selected, CustomerProfile customer) {
+        List<Ingredient> finalList = new ArrayList<>();
+
+        for (Ingredient ing : selected) {
+            boolean unavailable = ing.getQuantity() < ing.getThreshold();
+            boolean allergic = ing.getName().equalsIgnoreCase(customer.getAllergy());
+
+            if (unavailable || allergic) {
+                if (ing.getAlternative() != null) {
+                    System.out.printf("⚠️ '%s' is %s. Suggested: %s%n",
+                            ing.getName(),
+                            allergic ? "an allergen" : "out of stock",
+                            ing.getAlternative().getName());
+
+                    alertChef(customer, ing, ing.getAlternative());
+                    finalList.add(ing.getAlternative());  // apply substitution
+                } else {
+                    System.out.printf("❌ No substitute available for '%s'. Removing it.%n", ing.getName());
+                }
+            } else {
+                finalList.add(ing);
+            }
+        }
+
+        return finalList;
+    }
+
+    private void alertChef(CustomerProfile customer, Ingredient original, Ingredient substitute) {
+        System.out.printf("👨‍🍳 Chef Alert: %s's order substituted %s with %s.%n", customer.getName(), original.getName(), substitute.getName());
+
+    }
+
+
+    public void showAllAvailableMeals(CustomerProfile customer) {
+        if (meals.isEmpty()) {
+            System.out.println("❌ No meals available.");
+            return;
+        }
+
+        System.out.println("\n🍽️ Meals safe for " + customer.getName() + " (Allergy: " + customer.getAllergy() + "):");
+
+        int count = 0;
+        for (int i = 0; i < meals.size(); i++) {
+            meal meal = meals.get(i);
+
+            // ✅ Skip meals that contain allergens
+            if (meal.containsAllergen(customer.getAllergy())) {
+                continue;
+            }
+
+            double price = calculateMealPrice(meal.getIngredients());
+            System.out.printf("%d. %s - $%.2f\n", ++count, meal.getName(), price);
+
+            System.out.print("   Ingredients: ");
+            for (int j = 0; j < meal.getIngredients().size(); j++) {
+                Ingredient ing = meal.getIngredients().get(j);
+                System.out.print(ing.getName());
+                if (j < meal.getIngredients().size() - 1) System.out.print(", ");
+            }
+            System.out.println(); // new line
+        }
+
+        if (count == 0) {
+            System.out.println("⚠️ No meals match your allergy restrictions.");
+        }
+    }
 
 
 
