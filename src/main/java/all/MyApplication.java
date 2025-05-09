@@ -61,7 +61,6 @@ public class MyApplication {
         managers.add(new Manager("manager3", "manager3pass", "manager"));
 
 
-
         // 🥦 Mock ingredients
         Ingredient tomato = new Ingredient("Tomato", 20, 10, new Ingredient("Red Pepper", 10, 5, null));
         Ingredient cheese = new Ingredient("Cheese", 5, 8, new Ingredient("Vegan Cheese", 10, 5, null));
