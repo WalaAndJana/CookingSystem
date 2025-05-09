@@ -11,7 +11,7 @@ public class Manager extends Person {
     }
 
     public static void addIngredient(String name, int quantity, int threshold ,Ingredient m) {
-        ingredients.put(name.toLowerCase(), new Ingredient(name, quantity, threshold,m ));
+        ingredients.put(name.toLowerCase(), new Ingredient(name, quantity, threshold,m));
     }
 
     public static void useIngredient(String name, int amount) {

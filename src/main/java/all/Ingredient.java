@@ -13,6 +13,8 @@ public class Ingredient {
         this.threshold = threshold;
     }
 
+
+
     public boolean isLowStock() {
         return quantity < threshold;
     }
@@ -28,6 +30,12 @@ public class Ingredient {
             System.out.println("⚠️ Restock Alert: " + name + " is low (" + quantity + " left)");
         }
     }
+
+    public void IncreaseQuantity(int amount) {
+        this.quantity += amount;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -45,7 +53,7 @@ public class Ingredient {
         System.out.println("✅ " + name + " restocked. New quantity: " + quantity);
     }
 
-    public Ingredient getAlternative() {
+    public Ingredient getAlternative( ) {
         return alternative;
     }
 

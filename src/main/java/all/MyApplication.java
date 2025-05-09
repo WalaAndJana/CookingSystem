@@ -72,6 +72,10 @@ public class MyApplication {
         Ingredient sugar = new Ingredient("Sugar", 18, 10, new Ingredient("Stevia", 8, 3, null));
         Ingredient tofu = new Ingredient("Tofu", 10, 5, null);
         Ingredient salt = new Ingredient("Salt", 20, 10, null);
+        ingredients.add(tomato);  ingredients.add(cheese);  ingredients.add(lettuce);  ingredients.add(onion);
+        ingredients.add(garlic);  ingredients.add(beef);  ingredients.add(chicken);  ingredients.add(flour);
+        ingredients.add(sugar);  ingredients.add(tofu);  ingredients.add(salt);
+
 
 
         meal veganBowl = new meal("Vegan Bowl", List.of(tofu, lettuce, tomato));
@@ -370,7 +374,7 @@ public class MyApplication {
         }
     }
 
-
+///////////////////////////////////////////////////////////////
     public static void viewAssignedTasksForChef(String chefName) {
         for (chef chef : chefs) {
             if (chef.getUserName().equalsIgnoreCase(chefName)) {
@@ -500,6 +504,73 @@ public class MyApplication {
 
 
 
+    public void viewChefTasks(String username) {
+        chef ch = chefs.get(Integer.parseInt(username));
+        if (ch != null) {
+            List<String> tasks = ch.getAssignedTasks();
+            if (tasks.isEmpty()) {
+                System.out.println("📋 No tasks assigned.");
+            } else {
+                System.out.println("📋 Your assigned tasks:");
+                for (int i = 0; i < tasks.size(); i++) {
+                    System.out.println((i + 1) + ". " + tasks.get(i));
+                }
+            }
+        }
+    }
+
+    public void completeChefTask(String username, int taskIndex) {
+        chef ch = chefs.get(Integer.parseInt(username));
+        if (ch != null) {
+            List<String> tasks = ch.getAssignedTasks();
+            if (taskIndex > 0 && taskIndex <= tasks.size()) {
+                String completedTask = tasks.remove(taskIndex - 1);
+                System.out.println("✅ Task completed: " + completedTask);
+            } else {
+                System.out.println("❌ Invalid task number.");
+            }
+        }
+    }
 
 
+    public List<chef> getChefs() {
+        return chefs;
+    }
+
+    public void setChefs(List<chef> chefs) {
+        this.chefs = chefs;
+    }
+
+
+    public Ingredient findalternative (String name ) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(name)) {
+                    return ingredient;
+                } else {
+                    message = "Incorrect password";
+                    return null;
+                }
+    }
+        return null;
+}
+
+    public void useIngredient(String name, int qty) {
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient.getName().equals(name)) {
+                ingredient.reduceQuantity(qty);
+            } else {
+                message = "Ingredient not found";
+            }
+        }
+
+    }
+
+    public void restockIngredient(String name, int qty) {       for (Ingredient ingredient : ingredients) {
+        if (ingredient.getName().equals(name)) {
+            ingredient.IncreaseQuantity(qty);
+        } else {
+            message = "Ingredient not found";
+        }
+    }
+    }
 }
