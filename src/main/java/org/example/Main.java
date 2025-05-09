@@ -37,13 +37,14 @@ public class Main {
 
             if (role.equalsIgnoreCase("chef")) {
                 chefMenu(app, scanner, username);
-            } else if (role.equalsIgnoreCase("manager")) {
+            } else if (role.equalsIgnoreCase("managerj")) {
                 kitchenManagerMenu(app, scanner);
             } else {
                 System.out.println("❌ Unknown role. Access denied.");
             }
         }
     }
+
 
     private static void chefMenu(MyApplication app, Scanner scanner, String username) {
         System.out.println("\n👨‍🍳 Chef Menu 👨‍🍳");
