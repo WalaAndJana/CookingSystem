@@ -47,6 +47,7 @@ public class Main {
 
 
 
+
     private static void chefMenu(MyApplication app, Scanner scanner, String username) {
         System.out.println("\n👨‍🍳 Chef Menu 👨‍🍳");
         while (true) {
