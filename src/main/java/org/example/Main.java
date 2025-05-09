@@ -35,8 +35,6 @@ public class Main {
                 System.out.println("❌ Invalid username or password.");
                 continue; // Restart the loop
             }
-
-
             String role = app.getLoggedInUserRole();
 
             if (role.equalsIgnoreCase("chef")) {
