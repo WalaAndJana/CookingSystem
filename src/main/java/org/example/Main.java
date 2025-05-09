@@ -11,6 +11,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         MyApplication app = new MyApplication();
 
+
+
         while (true) { // Infinite loop
             System.out.println("╔═══════════════════════════════════════════════════════════════════════╗");
             System.out.println("║        Welcome to the Special Cook Project Management System          ║");
@@ -21,7 +23,7 @@ public class Main {
             System.out.println("║                               Login page                              ║");
             System.out.println("╚═══════════════════════════════════════════════════════════════════════╝");
 
-            
+
             System.out.print("👤 Enter username: ");
             String username = scanner.nextLine();
             System.out.print("🔑 Enter password: ");
