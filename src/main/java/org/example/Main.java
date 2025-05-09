@@ -21,6 +21,7 @@ public class Main {
             System.out.println("║                               Login page                              ║");
             System.out.println("╚═══════════════════════════════════════════════════════════════════════╝");
 
+            
             System.out.print("👤 Enter username: ");
             String username = scanner.nextLine();
             System.out.print("🔑 Enter password: ");
