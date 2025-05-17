@@ -31,7 +31,8 @@ public class Ingredient {
         }
     }
 
-    public void IncreaseQuantity(int amount) {
+    public void
+    IncreaseQuantity(int amount) {
         this.quantity += amount;
     }
 

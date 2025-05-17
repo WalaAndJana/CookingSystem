@@ -58,10 +58,12 @@ public class MyApplication {
         chefs.add(new chef("chef1", "grilling", "chef1pass", "chef"));
         chefs.add(new chef("chef2", "vegan", "chef2pass", "chef"));
         chefs.add(new chef("chef3", "baking", "chef3pass", "chef"));
+          final String ACTION_1 = "manager";  // Compliant
 
-        managers.add(new Manager("manager1", "manager1pass", "manager"));
-        managers.add(new Manager("manager2", "manager2pass", "manager"));
-        managers.add(new Manager("manager3", "manager3pass", "manager"));
+
+        managers.add(new Manager("manager1", "manager1pass", ACTION_1));
+        managers.add(new Manager("manager2", "manager2pass", ACTION_1));
+        managers.add(new Manager("manager3", "manager3pass", ACTION_1));
 
 
         // 🥦 Mock ingredients
