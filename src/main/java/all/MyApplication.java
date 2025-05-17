@@ -83,7 +83,6 @@ public class MyApplication {
         ingredients.add(sugar);  ingredients.add(tofu);  ingredients.add(salt);
 
 
-
         meal veganBowl = new meal("Vegan Bowl", List.of(tofu, lettuce, tomato));
         meal beefBurger = new meal("Beef Burger", List.of(beef, onion, lettuce, salt));
         meal cheesyGarlicBread = new meal("Cheesy Garlic Bread", List.of(flour, cheese, garlic));
