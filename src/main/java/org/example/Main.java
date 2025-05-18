@@ -15,7 +15,7 @@ public class Main {
 
         while (true) { // Infinite loop
             System.out.println("╔═══════════════════════════════════════════════════════════════════════╗");
-            System.out.println("║        Welcome to the Special Cook Project Management System          ║");
+            System.out.println("║       MAIN          ║");
             System.out.println("╚═══════════════════════════════════════════════════════════════════════╝");
 
             // Login Process
