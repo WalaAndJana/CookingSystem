@@ -170,7 +170,6 @@ public class MyApplication {
             }
 
         }
-
         for (Manager Manager : managers) {
             if (Manager.getUserName().equals(name)) {
                 if (Manager.getPass().equals(pass)) {
