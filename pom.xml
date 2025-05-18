@@ -8,14 +8,19 @@
     <artifactId>CookingSystem</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <sonar.organization>testforsoftware</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-        <maven.compiler.source>22</maven.compiler.source>
-        <maven.compiler.target>22</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
+<properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <sonar.organization>danazainab</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.projectKey>DanaZainab_cookingsys</sonar.projectKey>
+        <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+        <cucumber.version>7.18.1</cucumber.version>
+        <surefire.version>3.2.5</surefire.version>
+        <jacoco.version>0.8.12</jacoco.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>io.cucumber</groupId>
